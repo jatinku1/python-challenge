@@ -8,11 +8,10 @@ csvpath = os.path.join('Resources', 'budget_data.csv')
 csvfile = 'Resources/election_data.csv'
 
 candidates = {}
-each_candidate_vote = 0
 candidates_percent = {}
+winner_count = 0
 
 with open(csvfile) as data:
-#  headerline = data()
     reader = csv.reader(data)
     next(reader, None)
     row_count = 0
@@ -29,6 +28,11 @@ with open(csvfile) as data:
 for key, value in candidates.items():
    candidates_percent[key] = round((value/row_count) * 100, 2)
 
+for key in candidates.keys():
+    if candidates[key] > winner_count:
+        winner = key
+        winner_count = candidates[key]
+
 print(" ====================== \n")
 print("  Voting Analysis  \n")
 print(" ====================== \n")
@@ -36,6 +40,8 @@ print("Total Votes: " + str(row_count) + "\n")
 print("===========================\n")
 for key, value in candidates.items():
     print(key + ": " + str(candidates_percent[key]) + "% (" + str(value) + ") \n")
+print("============================ \n")
+print("Winner: " + winner)
 print("============================ \n")
 
 # creating new text file
